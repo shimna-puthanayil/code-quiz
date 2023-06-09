@@ -1,5 +1,6 @@
 var startButton=document.querySelector(".start-button");
 var timerElement = document.querySelector(".timer-count");
+var quizHeading=document.querySelector(".quiz-heading");
 
 var timerCount;
 
@@ -23,6 +24,9 @@ function startTimer() {
   function startQuiz() {
     
     timerCount = 75;
+     // Make the heading and button invisible
+    quizHeading.setAttribute("style","visibility:hidden");
     startTimer();
+    
   }
 startButton.addEventListener("click",startQuiz);
