@@ -2,10 +2,11 @@ var startButton = document.querySelector(".start-button");
 var timerElement = document.querySelector(".timer-count");
 var quizHeading = document.querySelector(".quiz-heading");
 var questionList = document.querySelector("#question-list");
-
+var resultElement = document.querySelector("#comment");
 var timerCount;
 var questions = [];
 var questionObject;
+var questionsCount = 0;
 
 function returnValue(questionObject, index) {
   if (index === 0) {
@@ -35,6 +36,7 @@ var question1 = {
   choice4: "numbers",
   answer: "alerts",
 };
+
 var question2 = {
   question:
     " The condition in an if else statement is enclosed with _____________",
@@ -44,6 +46,7 @@ var question2 = {
   choice4: "square brackets",
   answer: "curly brackets",
 };
+
 var question3 = {
   question: " Arrays in javascript can be used to store",
   choice1: "numbers and strings",
@@ -52,6 +55,7 @@ var question3 = {
   choice4: "all of the above",
   answer: "all of the above",
 };
+
 var question4 = {
   question:
     " String values must be enclosed within _____________ when being assigned to variables",
@@ -61,6 +65,7 @@ var question4 = {
   choice4: "paranthesis",
   answer: "quotes",
 };
+
 var question5 = {
   question:
     " A very useful tool used during development and debugging for printing content to the debugger is ",
@@ -73,20 +78,18 @@ var question5 = {
 
 function renderQuestions() {
   var chosenQuestion = "";
-  var questionObjIndex=0;
-  //Insert question objects into an array 'questions'.
-  if(questions.length===0)
-  {
-  for (i = 1; i <= 5; i++) {
-    questions.push("question" + i);
+  var questionObjIndex = 0;
+  //Insert question objects into an array 'questions'. when it is first render.
+  if (questions.length === 0) {
+    for (i = 1; i <= 5; i++) {
+      questions.push("question" + i);
+    }
   }
-}
-
   // Randomly picks object from questions array
-  questionObjIndex=Math.floor(Math.random() * questions.length);
+  questionObjIndex = Math.floor(Math.random() * questions.length);
   chosenQuestion = questions[questionObjIndex];
   console.log(questions);
-  questions=questions.toSpliced(questionObjIndex,1);
+  questions = questions.toSpliced(questionObjIndex, 1);
   console.log(questions);
   if (chosenQuestion === "question1") {
     questionObject = question1;
@@ -117,26 +120,25 @@ function renderQuestions() {
 
     questionList.appendChild(li);
   }
+  questionsCount++;
 }
 
 function startTimer() {
   // Sets timer
   timer = setInterval(function () {
-    if(timerCount>0)
-    {
-    timerCount--;
+    if (timerCount > 0) {
+      timerCount--;
     }
     timerElement.textContent = timerCount;
     if (timerCount >= 0) {
-        // Tests if win condition is met
-      if (isWin && timerCount > 0) {
+      // Tests if win condition is met
+      if (timerCount > 0) {
         // Clears interval and stops timer
         clearInterval(timer);
-       
       }
     }
     // Tests if time has run out
-    if (timerCount  === 0) {
+    if (timerCount === 0) {
       // Clears interval
       clearInterval(timer);
     }
@@ -161,18 +163,27 @@ questionList.addEventListener("click", function (event) {
     var selectedAnswer = element.textContent.split("");
     selectedAnswer = selectedAnswer.toSpliced(0, 3);
     var answer = selectedAnswer.join("");
+    questionList.setAttribute(
+      "style",
+      "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(97, 105, 124);width:800px"
+    );
+    resultElement.setAttribute(
+      "style",
+      "color:rgb(97, 105, 124);font-size:25px"
+    );
     if (answer === returnValue(questionObject, 5)) {
-      console.log("correct");
+      resultElement.textContent = "Correct !";
+    } else {
+      resultElement.textContent = "Wrong !";
+      timerCount = timerCount - 15;
+      if (timerCount <= 0) {
+        timerCount = 0;
+      }
+      timerElement.textContent = timerCount;
     }
-    else
-    {
-        timerCount=timerCount-15;
-        if(timerCount<=0)
-        {
-             timerCount=0;
-        }
-        timerElement.textContent = timerCount;
+    if (questionsCount < 6) {
+      renderQuestions();
+    } else {
     }
-    renderQuestions();
   }
 });
