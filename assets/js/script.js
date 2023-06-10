@@ -133,7 +133,7 @@ function startTimer() {
     timerElement.textContent = timerCount;
     if (timerCount >= 0) {
       // Tests if win condition is met
-      if (timerCount > 0) {
+      if (iswin &&timerCount > 0) {
         // Clears interval and stops timer
         clearInterval(timer);
       }
@@ -174,7 +174,8 @@ questionList.addEventListener("click", function (event) {
     );
     if (answer === returnValue(questionObject, 5)) {
       resultElement.textContent = "Correct !";
-    } else {
+    } 
+    else {
       resultElement.textContent = "Wrong !";
       timerCount = timerCount - 15;
       if (timerCount <= 0) {
@@ -184,41 +185,13 @@ questionList.addEventListener("click", function (event) {
     }
     if (questionsCount < 6) {
       renderQuestions();
-    } else {
+    } 
+    else {
     }
   }
 });
 
-var startButton=document.querySelector(".start-button");
-var timerElement = document.querySelector(".timer-count");
-var quizHeading=document.querySelector(".quiz-heading");
 
-var timerCount;
 
-function startTimer() {
-    // Sets timer
-    timer = setInterval(function() {
-      timerCount--;
-      timerElement.textContent = timerCount;
-      if (timerCount >= 0) {
-        
-      }
-      // Tests if time has run out
-      if (timerCount === 0) {
- 
-        // Clears interval
-        clearInterval(timer);
-        
-      }
-    }, 1000);
-  }
-  function startQuiz() {
-    
-    timerCount = 75;
-     // Make the heading and button invisible
-    quizHeading.setAttribute("style","visibility:hidden");
-    startTimer();
-    
-  }
-startButton.addEventListener("click",startQuiz);
+
 
