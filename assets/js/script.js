@@ -1,13 +1,15 @@
-
 var startButton = document.querySelector(".start-button");
 var timerElement = document.querySelector(".timer-count");
 var quizHeading = document.querySelector(".quiz-heading");
 var questionList = document.querySelector("#question-list");
 var resultElement = document.querySelector("#comment");
+var displayDiv = document.querySelector(".card");
+
 var timerCount;
 var questions = [];
 var questionObject;
 var questionsCount = 0;
+var isquestionsOver = false;
 
 function returnValue(questionObject, index) {
   if (index === 0) {
@@ -128,15 +130,16 @@ function startTimer() {
   // Sets timer
   timer = setInterval(function () {
     if (timerCount > 0) {
-      timerCount--;
+      if (isquestionsOver) {
+        // Clears interval and stops timer
+        clearInterval(timer);
+      } else {
+        timerCount--;
+      }
     }
     timerElement.textContent = timerCount;
     if (timerCount >= 0) {
       // Tests if win condition is met
-      if (iswin &&timerCount > 0) {
-        // Clears interval and stops timer
-        clearInterval(timer);
-      }
     }
     // Tests if time has run out
     if (timerCount === 0) {
@@ -174,8 +177,7 @@ questionList.addEventListener("click", function (event) {
     );
     if (answer === returnValue(questionObject, 5)) {
       resultElement.textContent = "Correct !";
-    } 
-    else {
+    } else {
       resultElement.textContent = "Wrong !";
       timerCount = timerCount - 15;
       if (timerCount <= 0) {
@@ -183,15 +185,45 @@ questionList.addEventListener("click", function (event) {
       }
       timerElement.textContent = timerCount;
     }
-    if (questionsCount < 6) {
+    if (questionsCount < 5) {
       renderQuestions();
-    } 
+    }
+    //Questions are over
     else {
+      isquestionsOver = true;
+      questionList.innerHTML = "";
+
+      var h3Element = document.querySelector(".final-message");
+      h3Element.textContent = "All done !";
+      var finalScore = document.querySelector(".final-score");
+      finalScore.textContent = "Your final score is " + timerCount;
+
+      var labelInitials = document.createElement("label");
+      var divInitials = document.querySelector(".div-initials");
+      labelInitials.textContent = "Enter initials : ";
+      divInitials.appendChild(labelInitials);
+
+      var inputInitials = document.createElement("input");
+      inputInitials.setAttribute("type", "text");
+      inputInitials.setAttribute("id", "input-initials");
+      divInitials.appendChild(inputInitials);
+
+      var buttonSubmit = document.createElement("button");
+      buttonSubmit.setAttribute("id", "button-submit");
+      buttonSubmit.textContent = "Submit";
+      divInitials.appendChild(buttonSubmit);
+
+      var inputValue = document.querySelector("#input-initials");
+      buttonSubmit.addEventListener("click", function () {
+        console.log(inputValue.value.trim());
+        var highScore = {
+          initial: inputValue.value.trim(),
+          score: timerCount,
+        };
+        localStorage.setItem("highScore", JSON.stringify(highScore));
+        location.href="./highscores.html";
+      });
+      //   labelInitials.setAttribute()
     }
   }
 });
-
-
-
-
-
