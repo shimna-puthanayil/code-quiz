@@ -123,6 +123,7 @@ ul {
 .question {
     color: rgb(197, 202, 215);
     font-size: 30px;
+    width: 800px;
 }
 
 .div-initials {
