@@ -157,8 +157,8 @@ function resultTimer() {
       // Clears interval and stops timer
       clearInterval(resulttimer);
       questionList.setAttribute("style", "padding-bottom:60px;border-bottom:none; border-bottom-color: rgb(97, 105, 124);width:800px");
-      resultElement.textContent="";
-      
+      resultElement.textContent = "";
+
     }
     else {
       resultTimerCount--;
@@ -203,19 +203,24 @@ function saveInitialsAndScore() {
 
   var inputValue = document.querySelector("#input-initials");
   buttonSubmit.addEventListener("click", function () {
-
-    var highScore = {
-      initial: inputValue.value.trim(),
-      score: timerCount,
-    };
-    highscoreArray = JSON.parse(localStorage.getItem("highscoreArray"));
-    if (highscoreArray === null) {
-      highscoreArray = [];
+    if (inputValue.value != null && inputValue.value.trim() != "") {
+      var highScore = {
+        initial: inputValue.value.trim(),
+        score: timerCount,
+      };
+      highscoreArray = JSON.parse(localStorage.getItem("highscoreArray"));
+      if (highscoreArray === null) {
+        highscoreArray = [];
+      }
+      highscoreArray.push(highScore);
+      localStorage.setItem("highscoreArray", JSON.stringify(highscoreArray));
+      //Redirects to the page highscores.html where the high scores and initials are displayed.
+      location.href = "./highscores.html";
     }
-    highscoreArray.push(highScore);
-    localStorage.setItem("highscoreArray", JSON.stringify(highscoreArray));
-    //Redirects to the page highscores.html where the high scores and initials are displayed.
-    location.href = "./highscores.html";
+    else
+    {
+      window.alert("Enter initials");
+    }
   });
 }
 
@@ -230,7 +235,7 @@ questionList.addEventListener("click", function (event) {
     var answer = selectedAnswer.join("");
     questionList.setAttribute("style", "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(97, 105, 124);width:800px");
     resultElement.setAttribute("style", "color:rgb(97, 105, 124);font-size:25px");
-    resultTimerCount=2;
+    resultTimerCount = 2;
     resultTimer();
     if (answer === returnValue(questionObject, 5)) {
       resultElement.textContent = "Correct !";
