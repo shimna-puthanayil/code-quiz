@@ -210,7 +210,7 @@ questionList.addEventListener("click", function (event) {
       divInitials.appendChild(inputInitials);
 
       var buttonSubmit = document.createElement("button");
-      buttonSubmit.setAttribute("id", "button-submit");
+      buttonSubmit.setAttribute("class", "button-submit");
       buttonSubmit.textContent = "Submit";
       divInitials.appendChild(buttonSubmit);
 
