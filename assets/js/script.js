@@ -6,6 +6,7 @@ var resultElement = document.querySelector("#comment");
 var displayDiv = document.querySelector(".card");
 
 var timerCount;
+var resultTimerCount;
 var questions = [];
 var questionObject;
 var questionsCount = 0;
@@ -84,7 +85,7 @@ function renderQuestions() {
   var questionObjIndex = 0;
   //Insert question objects into an array 'questions'. when it is first render.
   if (questions.length === 0) {
-    for (i = 1; i <= 5; i++) {
+    for (var i = 1; i <= 5; i++) {
       questions.push("question" + i);
     }
   }
@@ -148,6 +149,23 @@ function startTimer() {
   }, 1000);
 }
 
+function resultTimer() {
+  // Sets timer
+  resulttimer = setInterval(function () {
+    if (resultTimerCount === 0) {
+
+      // Clears interval and stops timer
+      clearInterval(resulttimer);
+      questionList.setAttribute("style", "padding-bottom:60px;border-bottom:none; border-bottom-color: rgb(97, 105, 124);width:800px");
+      resultElement.textContent="";
+      
+    }
+    else {
+      resultTimerCount--;
+    }
+
+  }, 1000);
+}
 function startQuiz() {
   timerCount = 75;
   // Make the heading and button invisible
@@ -203,20 +221,17 @@ function saveInitialsAndScore() {
 
 // Add click event to questionList element
 questionList.addEventListener("click", function (event) {
+  event.preventDefault();
   var element = event.target;
   // Checks if element is a button
   if (element.matches("button")) {
     var selectedAnswer = element.textContent.split("");
     selectedAnswer = selectedAnswer.toSpliced(0, 3);
     var answer = selectedAnswer.join("");
-    questionList.setAttribute(
-      "style",
-      "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(97, 105, 124);width:800px"
-    );
-    resultElement.setAttribute(
-      "style",
-      "color:rgb(97, 105, 124);font-size:25px"
-    );
+    questionList.setAttribute("style", "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(97, 105, 124);width:800px");
+    resultElement.setAttribute("style", "color:rgb(97, 105, 124);font-size:25px");
+    resultTimerCount=2;
+    resultTimer();
     if (answer === returnValue(questionObject, 5)) {
       resultElement.textContent = "Correct !";
     } else {
