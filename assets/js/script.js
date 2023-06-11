@@ -191,6 +191,7 @@ questionList.addEventListener("click", function (event) {
     //Questions are over
     else {
       isquestionsOver = true;
+      var highscoreArray=[];
       questionList.innerHTML = "";
 
       var h3Element = document.querySelector(".final-message");
@@ -209,21 +210,28 @@ questionList.addEventListener("click", function (event) {
       divInitials.appendChild(inputInitials);
 
       var buttonSubmit = document.createElement("button");
-      buttonSubmit.setAttribute("id", "button-submit");
+      buttonSubmit.setAttribute("class", "button-submit");
       buttonSubmit.textContent = "Submit";
       divInitials.appendChild(buttonSubmit);
 
       var inputValue = document.querySelector("#input-initials");
       buttonSubmit.addEventListener("click", function () {
-        console.log(inputValue.value.trim());
+        
         var highScore = {
           initial: inputValue.value.trim(),
           score: timerCount,
         };
-        localStorage.setItem("highScore", JSON.stringify(highScore));
+        highscoreArray=JSON.parse(localStorage.getItem("highscoreArray"));
+        if(highscoreArray===null)
+        {
+            highscoreArray=[];
+        }
+        highscoreArray.push(highScore);
+        localStorage.setItem("highscoreArray", JSON.stringify(highscoreArray));
+        //Redirects to the page highscores.html where the high scores and initials are displayed.
         location.href="./highscores.html";
       });
-      //   labelInitials.setAttribute()
+      
     }
   }
 });
