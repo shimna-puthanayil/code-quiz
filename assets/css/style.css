@@ -33,7 +33,7 @@ button {
     font-size: 1.5em;
     letter-spacing: 0.21px;
     line-height: 16px;
-    max-width: 200px;
+    /* max-width: 200px; */
     padding: 13px 15px;
     text-align: center;
     transition-duration: 0.15s;
@@ -168,19 +168,45 @@ ul {
     border-radius: 8px;
     color: #13293d;
     cursor: pointer;
-    font-size: 25px;
+    font-size: 20px;
     letter-spacing: 0.21px;
     line-height: 5px;
      width: 120px;
     padding: 13px 15px;
     /* padding-left: 10px; */
-    text-align: left;
+    text-align: center;
     transition-duration: 0.15s;
     transition-property: background-color;
     transition-timing-function: linear;
     margin-top: 10px;
     margin-left: 10px;
 }
+.div-highscores{
+    margin-left: 270px;
+    margin-top: 100px;
+}
+ /* #button-clear #button-submit{
+    width: 300px; */
+    /* background: radial-gradient(circle, rgba(240, 230, 140, 1) 0%, rgba(187, 96, 33, 0.9542191876750701) 100%);
+    border-radius: 8px;
+    color: #13293d;
+    cursor: pointer;
+    font-size: 20px;
+    letter-spacing: 0.21px;
+    line-height: 5px;
+     
+    padding: 13px 15px;
+  
+    text-align: center;
+    transition-duration: 0.15s;
+    transition-property: background-color;
+    transition-timing-function: linear;
+    margin-top: 10px;
+    margin-left: 10px; */
+/* } */
+#button-submi #clear {
+    width: 300px;
+} 
 @media screen and (max-width: 1183px) {
     main {
         flex-direction: column;
