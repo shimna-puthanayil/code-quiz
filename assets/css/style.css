@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     justify-content: flex-start;
-    background: linear-gradient(0deg, rgba(237, 245, 249, 1) 0%, rgba(19, 41, 61, 1)63%);
+    background: linear-gradient(0deg, rgba(237, 245, 249, 1) 0%, rgb(35, 65, 94)63%);
     /* background: linear-gradient(0deg, rgba(237,245,249,1) 63%, rgba(19,41,61,1) 0%); */
 
 }
@@ -133,7 +133,7 @@ ul {
     color: rgb(197, 202, 215);
     font-size: 25px;
 }
-#input-initials {
+#input-initials { 
     background-color: whitesmoke;
     border-radius: 3px;
     border-width: 1px;
