@@ -133,18 +133,17 @@ function startTimer() {
       if (isquestionsOver) {
         // Clears interval and stops timer
         clearInterval(timer);
-      } else {
+        saveInitialsAndScore();
+      }
+      else {
         timerCount--;
       }
     }
     timerElement.textContent = timerCount;
-    if (timerCount >= 0) {
-      // Tests if win condition is met
-    }
-    // Tests if time has run out
     if (timerCount === 0) {
-      // Clears interval
+      // Clears interval  and stops timer
       clearInterval(timer);
+      saveInitialsAndScore();
     }
   }, 1000);
 }
@@ -158,6 +157,49 @@ function startQuiz() {
 }
 // Add click event to startButton button element
 startButton.addEventListener("click", startQuiz);
+
+//Saves the score and initials into local storage
+function saveInitialsAndScore() {
+  var highscoreArray = [];
+  questionList.innerHTML = "";
+
+  var h3Element = document.querySelector(".final-message");
+  h3Element.textContent = "All done !";
+  var finalScore = document.querySelector(".final-score");
+  finalScore.textContent = "Your final score is " + timerCount;
+
+  var labelInitials = document.createElement("label");
+  var divInitials = document.querySelector(".div-initials");
+  labelInitials.textContent = "Enter initials : ";
+  divInitials.appendChild(labelInitials);
+
+  var inputInitials = document.createElement("input");
+  inputInitials.setAttribute("type", "text");
+  inputInitials.setAttribute("id", "input-initials");
+  divInitials.appendChild(inputInitials);
+
+  var buttonSubmit = document.createElement("button");
+  buttonSubmit.setAttribute("class", "button-submit");
+  buttonSubmit.textContent = "Submit";
+  divInitials.appendChild(buttonSubmit);
+
+  var inputValue = document.querySelector("#input-initials");
+  buttonSubmit.addEventListener("click", function () {
+
+    var highScore = {
+      initial: inputValue.value.trim(),
+      score: timerCount,
+    };
+    highscoreArray = JSON.parse(localStorage.getItem("highscoreArray"));
+    if (highscoreArray === null) {
+      highscoreArray = [];
+    }
+    highscoreArray.push(highScore);
+    localStorage.setItem("highscoreArray", JSON.stringify(highscoreArray));
+    //Redirects to the page highscores.html where the high scores and initials are displayed.
+    location.href = "./highscores.html";
+  });
+}
 
 // Add click event to questionList element
 questionList.addEventListener("click", function (event) {
@@ -191,47 +233,6 @@ questionList.addEventListener("click", function (event) {
     //Questions are over
     else {
       isquestionsOver = true;
-      var highscoreArray=[];
-      questionList.innerHTML = "";
-
-      var h3Element = document.querySelector(".final-message");
-      h3Element.textContent = "All done !";
-      var finalScore = document.querySelector(".final-score");
-      finalScore.textContent = "Your final score is " + timerCount;
-
-      var labelInitials = document.createElement("label");
-      var divInitials = document.querySelector(".div-initials");
-      labelInitials.textContent = "Enter initials : ";
-      divInitials.appendChild(labelInitials);
-
-      var inputInitials = document.createElement("input");
-      inputInitials.setAttribute("type", "text");
-      inputInitials.setAttribute("id", "input-initials");
-      divInitials.appendChild(inputInitials);
-
-      var buttonSubmit = document.createElement("button");
-      buttonSubmit.setAttribute("class", "button-submit");
-      buttonSubmit.textContent = "Submit";
-      divInitials.appendChild(buttonSubmit);
-
-      var inputValue = document.querySelector("#input-initials");
-      buttonSubmit.addEventListener("click", function () {
-        
-        var highScore = {
-          initial: inputValue.value.trim(),
-          score: timerCount,
-        };
-        highscoreArray=JSON.parse(localStorage.getItem("highscoreArray"));
-        if(highscoreArray===null)
-        {
-            highscoreArray=[];
-        }
-        highscoreArray.push(highScore);
-        localStorage.setItem("highscoreArray", JSON.stringify(highscoreArray));
-        //Redirects to the page highscores.html where the high scores and initials are displayed.
-        location.href="./highscores.html";
-      });
-      
     }
   }
 });
