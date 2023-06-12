@@ -32,11 +32,11 @@ function renderScores() {
   //Dynamically created a list of initials along with scores which is displayed with highest score on top.(highest to lowest).
   for (var i = 0; i < sortedScoreArray.length; i++) {
     var liElement = document.createElement("li");
-    liElement.textContent = i + 1 + ". " + sortedScoreArray[i].initial + "-" + sortedScoreArray[i].score;
+    liElement.textContent = (i + 1) + ". " + sortedScoreArray[i].initial + " - " + sortedScoreArray[i].score;
     if (i === 0) {
-      liElement.setAttribute("style", "font-size: 25px ;  color : rgb(197, 202, 215); width:500px;background-color: #506580");
+      liElement.setAttribute("style", "padding:6px ; font-size: 20px ;  color : rgb(197, 202, 215); width:600px;background-color: #506580");
     } else {
-      liElement.setAttribute("style", " font-size: 25px ;  color : rgb(197, 202, 215); width:500px");
+      liElement.setAttribute("style", "padding:6px ; font-size: 20px ;  color : rgb(197, 202, 215); width:600px");
     }
     highScoreList.appendChild(liElement);
   }

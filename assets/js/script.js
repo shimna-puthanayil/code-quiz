@@ -169,7 +169,7 @@ function saveInitialsAndScore() {
   h3Element.textContent = "All done !";
   var finalScore = document.querySelector(".final-score");
   finalScore.textContent = "Your final score is " + timerCount;
-  
+
   //Create element for label
   var labelInitials = document.createElement("label");
   var divInitials = document.querySelector(".div-initials");
@@ -178,8 +178,9 @@ function saveInitialsAndScore() {
 
   //Create element for input text -initials
   var inputInitials = document.createElement("input");
-  inputInitials.setAttribute("type", "text");
-  inputInitials.setAttribute("id", "input-initials");
+  inputInitials.setAttribute("type","text");
+  inputInitials.setAttribute("id","input-initials");
+  inputInitials.setAttribute("style","background-color:rgb(197, 202, 215)");
   divInitials.appendChild(inputInitials);
 
   //Create element for Submit button
@@ -192,6 +193,10 @@ function saveInitialsAndScore() {
   buttonSubmit.addEventListener("click", function () {
 
     if (inputInitials.value != null && inputInitials.value.trim() != "") {
+      if (!isNaN(inputInitials.value)) {
+        window.alert("Enter a valid initial");
+        return;
+      }
       var highScore = {
         initial: inputInitials.value.trim(),
         score: timerCount,
@@ -231,8 +236,8 @@ questionList.addEventListener("click", function (event) {
       timerElement.textContent = timerCount;
     }
     //Added styles for the result display
-    questionList.setAttribute("style", "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(97, 105, 124);width:800px");
-    resultElement.setAttribute("style", "color:rgb(97, 105, 124);font-size:25px");
+    questionList.setAttribute("style", "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(77, 82, 96);width:800px");
+    resultElement.setAttribute("style", "color:rgb(77, 82, 96);font-size:25px");
     //Timer is set for the result display.
     resultTimerCount = 2;
     resultTimer();
