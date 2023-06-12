@@ -1,6 +1,7 @@
 var highScoreList = document.querySelector("#highscores");
 var buttonClear = document.querySelector("#button-clear");
 
+//Displays high scores and initials
 function renderScores() {
   var highestScore = 0;
   var index = 0;
@@ -13,8 +14,7 @@ function renderScores() {
     highScoreArray = highScores;
   }
   var count = highScoreArray.length;
-
-  //Sorted the array of objects which contains initials and scores in descending order.
+  //Sorted the array of objects in descending order.
   for (var j = 0; j < count; j++) {
     highestScore = 0;
     index = 0;
@@ -29,23 +29,23 @@ function renderScores() {
 
   }
 
-
-  //Dynamically created a list of initials and scores which is displayed with highest score on top.(highest to lowest).
+  //Dynamically created a list of initials along with scores which is displayed with highest score on top.(highest to lowest).
   for (var i = 0; i < sortedScoreArray.length; i++) {
     var liElement = document.createElement("li");
-    liElement.textContent = i + 1 + ". " + sortedScoreArray[i].initial + "-" + sortedScoreArray[i].score;
+    liElement.textContent = (i + 1) + ". " + sortedScoreArray[i].initial + " - " + sortedScoreArray[i].score;
     if (i === 0) {
-      liElement.setAttribute("style", "font-size: 25px ;  color : rgb(197, 202, 215); width:500px;background-color: #506580");
+      liElement.setAttribute("style", "padding:6px ; font-size: 20px ;  color : rgb(197, 202, 215); width:600px;background-color: #506580");
     } else {
-      liElement.setAttribute("style", " font-size: 25px ;  color : rgb(197, 202, 215); width:500px");
+      liElement.setAttribute("style", "padding:6px ; font-size: 20px ;  color : rgb(197, 202, 215); width:600px");
     }
     highScoreList.appendChild(liElement);
   }
 }
+
 renderScores();
 
 buttonClear.addEventListener("click", function () {
-  localStorage.clear();
-  highScoreList.innerHTML="";
-  
+  //Clears local storage 
+  localStorage.removeItem("highscoreArray");
+  highScoreList.innerHTML = "";
 })
