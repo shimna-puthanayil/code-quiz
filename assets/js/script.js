@@ -169,6 +169,7 @@ function saveInitialsAndScore() {
   h3Element.textContent = "All done !";
   var finalScore = document.querySelector(".final-score");
   finalScore.textContent = "Your final score is " + timerCount;
+  
   //Create element for label
   var labelInitials = document.createElement("label");
   var divInitials = document.querySelector(".div-initials");
