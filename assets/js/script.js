@@ -141,7 +141,7 @@ function resultTimer() {
     if (resultTimerCount === 0) {
       // Clears interval and stops timer
       clearInterval(resulttimer);
-      questionList.setAttribute("style", "padding-bottom:60px;border-bottom:none; border-bottom-color: rgb(97, 105, 124);width:800px");
+      questionList.setAttribute("style", "padding-bottom:60px;border-bottom:none; border-bottom-color: rgb(97, 105, 124)");
       resultElement.textContent = "";
     }
     else {
@@ -151,8 +151,8 @@ function resultTimer() {
 }
 function startQuiz() {
   timerCount = 75;
-  // Make the heading and button invisible
-  quizHeading.setAttribute("style", "visibility:hidden");
+  // Remove the quiz heading and button 
+   quizHeading.remove();
   renderQuestions();
   startTimer();
 }
@@ -236,7 +236,7 @@ questionList.addEventListener("click", function (event) {
       timerElement.textContent = timerCount;
     }
     //Added styles for the result display
-    questionList.setAttribute("style", "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(77, 82, 96);width:800px");
+    questionList.setAttribute("style", "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(77, 82, 96);width:75%");
     resultElement.setAttribute("style", "color:rgb(77, 82, 96);font-size:25px");
     //Timer is set for the result display.
     resultTimerCount = 2;
