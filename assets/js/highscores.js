@@ -34,7 +34,8 @@ function renderScores() {
     var liElement = document.createElement("li");
     liElement.textContent = (i + 1) + ". " + sortedScoreArray[i].initial + " - " + sortedScoreArray[i].score;
     if (i === 0) {
-      liElement.setAttribute("style", "padding:6px ; font-size: 20px ;  color : rgb(197, 202, 215); width:600px;background-color: #506580");
+      liElement.setAttribute("class","topscore");
+      liElement.setAttribute("style", "padding:6px ; font-size: 20px ;  color : rgb(197, 202, 215); width:60%;background-color: #506580");
     } else {
       liElement.setAttribute("style", "padding:6px ; font-size: 20px ;  color : rgb(197, 202, 215); width:600px");
     }
