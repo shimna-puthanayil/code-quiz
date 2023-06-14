@@ -24,16 +24,16 @@ var question1 = {
 };
 
 var question2 = {
-  question: " The condition in an if else statement is enclosed with _____________",
+  question: " The condition in an if / else statement is enclosed with _____________",
   choice1: "quotes",
   choice2: "curly brackets",
   choice3: "paranthesis",
   choice4: "square brackets",
-  answer: "curly brackets",
+  answer: "paranthesis",
 };
 
 var question3 = {
-  question: " Arrays in javascript can be used to store",
+  question: " Arrays in javascript can be used to store _____________",
   choice1: "numbers and strings",
   choice2: "other arrays",
   choice3: "booleans",
@@ -42,7 +42,7 @@ var question3 = {
 };
 
 var question4 = {
-  question: " String values must be enclosed within _____________ when being assigned to variables",
+  question: " String values must be enclosed within _____________ when being assigned to variables.",
   choice1: "commas",
   choice2: "curly brackets",
   choice3: "quotes",
@@ -51,7 +51,7 @@ var question4 = {
 };
 
 var question5 = {
-  question: " A very useful tool used during development and debugging for printing content to the debugger is ",
+  question: " A very useful tool used during development and debugging for printing content to the debugger is: ",
   choice1: "javascript",
   choice2: "terminal/bash",
   choice3: "for loops",
@@ -111,6 +111,72 @@ function renderQuestions() {
   questionsCount++;
 }
 
+//Saves the score and initials into local storage .This function is called inside startTimer().
+function saveInitialsAndScore() {
+  var highscoreArray = [];
+  questionList.innerHTML = "";
+
+  var h3Element = document.querySelector(".final-message");
+  h3Element.textContent = "All done !";
+  var finalScore = document.querySelector(".final-score");
+  finalScore.textContent = "Your final score is " + timerCount;
+
+  //Create element for label
+  var labelInitials = document.createElement("label");
+  var divInitials = document.querySelector(".div-initials");
+  labelInitials.textContent = "Enter initials : ";
+  divInitials.appendChild(labelInitials);
+
+  //Create element for input text -initials
+  var inputInitials = document.createElement("input");
+  inputInitials.setAttribute("type", "text");
+  inputInitials.setAttribute("id", "input-initials");
+  inputInitials.setAttribute("style", "background-color:rgb(197, 202, 215)");
+  divInitials.appendChild(inputInitials);
+
+  //Create element for Submit button
+  var buttonSubmit = document.createElement("button");
+  buttonSubmit.setAttribute("class", "button-submit");
+  buttonSubmit.textContent = "Submit";
+  divInitials.appendChild(buttonSubmit);
+
+  //Create event for submit button click
+  buttonSubmit.addEventListener("click", function () {
+    if (inputInitials.value != null && inputInitials.value.trim() != "") {
+      if (!isNaN(inputInitials.value)) {
+        window.alert("Enter a valid initial");
+        return;
+      }
+      highscoreArray = JSON.parse(localStorage.getItem("highscoreArray"));
+      if (highscoreArray === null) {
+        highscoreArray = [];
+      }
+      //check for duplicate initial
+      for (var i = 0; i < highscoreArray.length; i++) {
+        if (highscoreArray[i].initial === inputInitials.value.trim().toUpperCase()) {
+          if (confirm("This initial already exists.Do you want to change the initials?")) {
+            inputInitials.value = "";
+            return;
+          }
+        }
+      }
+      var highScore = {
+        initial: inputInitials.value.trim().toUpperCase(),
+        score: timerCount,
+      };
+      //High score is stored as an array of objects in the local storage
+      highscoreArray.push(highScore);
+      localStorage.setItem("highscoreArray", JSON.stringify(highscoreArray));
+      //Redirects to the page highscores.html where the high scores and initials are displayed.
+      location.href = "./highscores.html";
+    }
+    else {
+      //validation
+      window.alert("Enter initials");
+    }
+  });
+}
+
 // The startTimer function starts and stops the timer and triggers saveInitialsAndScore()
 function startTimer() {
   // Sets timer
@@ -125,7 +191,7 @@ function startTimer() {
         timerCount--;
       }
     }
-    timerElement.textContent = timerCount;
+    timerElement.textContent ="Time : "+timerCount+"" ;
     if (timerCount === 0) {
       // Clears interval  and stops timer
       clearInterval(timer);
@@ -149,10 +215,11 @@ function resultTimer() {
     }
   }, 1000);
 }
+
 function startQuiz() {
   timerCount = 75;
   // Remove the quiz heading and button 
-   quizHeading.remove();
+  quizHeading.remove();
   renderQuestions();
   startTimer();
 }
@@ -160,66 +227,9 @@ function startQuiz() {
 // Add click event to startButton button element
 startButton.addEventListener("click", startQuiz);
 
-//Saves the score and initials into local storage
-function saveInitialsAndScore() {
-  var highscoreArray = [];
-  questionList.innerHTML = "";
-
-  var h3Element = document.querySelector(".final-message");
-  h3Element.textContent = "All done !";
-  var finalScore = document.querySelector(".final-score");
-  finalScore.textContent = "Your final score is " + timerCount;
-
-  //Create element for label
-  var labelInitials = document.createElement("label");
-  var divInitials = document.querySelector(".div-initials");
-  labelInitials.textContent = "Enter initials : ";
-  divInitials.appendChild(labelInitials);
-
-  //Create element for input text -initials
-  var inputInitials = document.createElement("input");
-  inputInitials.setAttribute("type","text");
-  inputInitials.setAttribute("id","input-initials");
-  inputInitials.setAttribute("style","background-color:rgb(197, 202, 215)");
-  divInitials.appendChild(inputInitials);
-
-  //Create element for Submit button
-  var buttonSubmit = document.createElement("button");
-  buttonSubmit.setAttribute("class", "button-submit");
-  buttonSubmit.textContent = "Submit";
-  divInitials.appendChild(buttonSubmit);
-
-  //Create event for submit button click
-  buttonSubmit.addEventListener("click", function () {
-
-    if (inputInitials.value != null && inputInitials.value.trim() != "") {
-      if (!isNaN(inputInitials.value)) {
-        window.alert("Enter a valid initial");
-        return;
-      }
-      var highScore = {
-        initial: inputInitials.value.trim(),
-        score: timerCount,
-      };
-      highscoreArray = JSON.parse(localStorage.getItem("highscoreArray"));
-      if (highscoreArray === null) {
-        highscoreArray = [];
-      }
-      highscoreArray.push(highScore);
-      localStorage.setItem("highscoreArray", JSON.stringify(highscoreArray));
-      //Redirects to the page highscores.html where the high scores and initials are displayed.
-      location.href = "./highscores.html";
-    }
-    else {
-      //validation
-      window.alert("Enter initials");
-    }
-  });
-}
-
 // Add click event to questionList element(triggers when an answer is clicked )
 questionList.addEventListener("click", function (event) {
-  event.preventDefault();
+  // event.preventDefault();
   var element = event.target;
   // Checks if element is a button
   if (element.matches("button")) {
@@ -233,7 +243,7 @@ questionList.addEventListener("click", function (event) {
       if (timerCount <= 0) {
         timerCount = 0;
       }
-      timerElement.textContent = timerCount;
+      timerElement.textContent ="Time : "+timerCount+"" ;
     }
     //Added styles for the result display
     questionList.setAttribute("style", "padding-bottom:60px;border-bottom:solid; border-bottom-color: rgb(77, 82, 96);width:75%");

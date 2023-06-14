@@ -46,7 +46,7 @@ function renderScores() {
 renderScores();
 
 buttonClear.addEventListener("click", function () {
-  //Clears local storage 
+  //Removes object from local storage 
   localStorage.removeItem("highscoreArray");
   highScoreList.innerHTML = "";
 })
